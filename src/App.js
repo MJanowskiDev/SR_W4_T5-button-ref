@@ -1,25 +1,33 @@
-import logo from './logo.svg';
+import { useEffect, createRef } from 'react';
 import './App.css';
+import Button from './components/Button';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const btnRef = createRef();
+
+	useEffect(
+		() => {
+			const pointerEnterHandle = () => {
+				btnRef.current.style.background = 'red';
+			};
+
+			const pointerLeaveHandle = () => {
+				btnRef.current.style.background = 'blue';
+			};
+			btnRef.current.style.background = 'blue';
+			btnRef.current.style.color = 'white';
+
+			btnRef.current.onpointerenter = pointerEnterHandle;
+			btnRef.current.onpointerleave = pointerLeaveHandle;
+		},
+		[ btnRef ]
+	);
+
+	return (
+		<div className='App'>
+			<Button ref={btnRef}>Point over me!</Button>
+		</div>
+	);
 }
 
 export default App;
