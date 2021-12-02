@@ -7,24 +7,34 @@ function App() {
 
 	useEffect(
 		() => {
+			const btn = btnRef.current;
+
 			const pointerEnterHandle = () => {
-				btnRef.current.style.background = 'red';
+				btn.style.background = 'red';
 			};
 
 			const pointerLeaveHandle = () => {
-				btnRef.current.style.background = 'blue';
+				btn.style.background = 'blue';
 			};
-			btnRef.current.style.background = 'blue';
-			btnRef.current.style.color = 'white';
+			btn.style.background = 'blue';
+			btn.style.color = 'white';
 
-			btnRef.current.onpointerenter = pointerEnterHandle;
-			btnRef.current.onpointerleave = pointerLeaveHandle;
+			btn.onpointerenter = pointerEnterHandle;
+			btn.onpointerleave = pointerLeaveHandle;
+
+			btn.addEventListener('onpointerenter', pointerEnterHandle);
+			btn.addEventListener('onpointerleave', pointerLeaveHandle);
+
+			return () => {
+				btn.removeEventListener('onpointerenter', pointerEnterHandle);
+				btn.removeEventListener('onpointerleave', pointerLeaveHandle);
+			};
 		},
 		[ btnRef ]
 	);
 
 	return (
-		<div className='App'>
+		<div className="App">
 			<Button ref={btnRef}>Point over me!</Button>
 		</div>
 	);
